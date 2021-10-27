@@ -31,3 +31,5 @@ res = fzero(@error_func, r);
         res = massOfDuck - massOfWaterDisplaced;  % Replace 0 with the result of your error calculation.
     end
 end
+
+% testest
