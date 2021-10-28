@@ -1,10 +1,9 @@
 function [T,D] = solar_house_ode45()
 
 %parameters
-C(1) = 370; %hous starting temperature (K)
-k_e = 290; %external starting temperature (K)
-c_d = .08; %diameter of coffee mug(m)
-c_h = .10; %height of coffe mug(m)
+C(1) = 300; %house int starting temperature (K)
+k_e = 290; %external temperature (K)
+W = 10; %sidelength of house (m)
 c_t = .007; %thickness of coffe mug (m)
 A = (pi*c_d)*c_h + pi*(c_d/2)^2; %surface area of coffee
 V =(c_d/2)^2*pi*c_h; %volume of coffee
