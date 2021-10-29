@@ -20,11 +20,12 @@ d = .0001;%density of air (kg/m^3)_____
 
 d_0 = 0;
 d_end = 60; %in days
+t_span = [d_0:d_end];
 
 Tr_0 = 300; %house interior starting temperature (K)
 Tf_0 = 300; %floor starting temperature (K)
 
-[T,D] = ode45(@rate_func,[d_0, d_end],Tf_0,Tr_0);
+[T,D] = ode45(@rate_func,tspan,Tf_0,Tr_0);
 
     function res = rate_func (~,D) 
         dUfdt = e*I*A - h_f*A*(Tf - Tr); %change in energy in the floor
