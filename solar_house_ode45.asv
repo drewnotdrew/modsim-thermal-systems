@@ -1,31 +1,36 @@
 function [T,D] = solar_house_ode45() %T = temperature D = day
 
 %parameters
-t(1) = 300; %house int starting temperature (K)
-t_e = 290; %external temperature (K)
+Tr(1) = 300; %house int starting temperature (K)
+Ta = 290; %external temperature (K)
+Tf(1) = 
 w = 10; %sidelength of house (m)
 wt = .1; %thickness of walls (m)
 
+A = w^2; %area of floor (m)
 SA = w^2*5; %surface area of house (m^2)
 V = w^3; %volume of house(m^3)
+I = 100; %insulation of walls___
 
+e = .5; %efficiency of floor___
 h_a = 10; %heat transfer of air
-h_w = 500;%heat transfer of walls
+h_w = 500; %heat transfer of walls__
+h_f = 500; %heat coefficient of floor__
+h = ;%specific heat of air
+d = ;%density of air
 
 d_0 = 0;
 d_end = 60; %in days
 
-t_0 = 300; %house interior starting temperature (K)
+Tr_0 = 300; %house interior starting temperature (K)
 
-[T,D] = ode45(@rate_func,[d_0, d_end],[t_0]);
+[T,D] = ode45(@rate_func,[d_0, d_end],[Tr_0]);
 
     function res = rate_func (~,D) 
-        c_d = k*SA/c_t*(D(1)-k_e); %calculating conduction
-        c_vr = 1/(h_a*A) + 1/(h_c*A); %calculating convective resistance
-        c_v = (1/c_vr) * (D(1)-k_e); %calculating conduction
-        dTdt = c_u + c_v;
-        C_c = dTdt/(V*d*h); %converting energy to change in temperature
-        res = -C_c; %calculating net flow
+        dUfdt = e*I*A - h_f*A(Tf - Tr); %change in energy in the floor
+        dUrdt = h_f*A(Tf - Tr) - ((k*a)/d)*(Tr-Ta);%change in energy in the room
+        D = dUrdt/(V*d*h); %converting energy to change in temperature
+        res = D; 
     end
 
 
