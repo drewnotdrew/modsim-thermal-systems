@@ -1,22 +1,22 @@
 function [T,D] = solar_house_ode45() %T = temperature D = day
 
 %parameters
-Tf(1) = 300; %floor starting temperature (K)
-Tr(1) = 300; %house int starting temperature (K)
-Ta = 290; %external temperature (K)
+Tf(1) = 290; %floor starting temperature (K)
+Tr(1) = 290; %house int starting temperature (K)
+Ta = 284; %external temperature (K)
 w = 10; %sidelength of house (m)
-wt = .1; %thickness of walls (m)
+wt = .15; %thickness of walls (m)
 
 A = w^2; %area of floor (m)
 SA = w^2*5; %surface area of house (m^2)
 V = w^3; %volume of house(m^3)
-I = 100; %insulation of walls___
+I = 100; %insulation of walls
 
-e = 1; %efficiency of floor___
-h_a = 10; %heat transfer of air
-h_w = 500; %heat transfer of walls__
-h_f = 500; %heat coefficient of floor__
-d = .0001;%density of air (kg/m^3)_____
+e = 1; %efficiency of floor
+h_a = .1; %heat transfer of air
+h_w = .8; %heat transfer of walls
+h_f = .45; %heat coefficient of floor
+d = .0001;%density of air (kg/m^3)
 
 d_0 = 0;
 d_end = 60; %in days
