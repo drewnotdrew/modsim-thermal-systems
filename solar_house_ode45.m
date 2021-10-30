@@ -27,11 +27,12 @@ Tf_0 = 300; %floor starting temperature (K)
 
 [T,D] = ode45(@rate_func,t_span,Tf_0,Tr_0);
 
-    function res = rate_func (~,D) 
+    function res = rate_func (~,T) 
+        
         dUfdt = e*I*A - h_f*A*(Tf - Tr); %change in energy in the floor
-        dUrdt = h_f*A*(Tf - Tr) - ((h_w*SA)/wt)*(Tr-Ta);%change in energy in the room
-        D = dUrdt/(V*d*h_a); %converting energy to change in temperature
-        res = D; 
+        dUrdt = h_f*A*(Tf - Tr) - ((h_w*SA)/wt)*(Tr - Ta);%change in energy in the room
+        T = dUrdt/(V*d*h_a); %converting energy to change in temperature
+        res = -T; 
     end
 
 
