@@ -34,6 +34,7 @@ Tf_0 = 300; %floor starting temperature (K)
         T = dUrdt/(V*d*h_a); %converting energy to change in temperature
         res = -T; 
     end
-
+D
+T
 
 end
