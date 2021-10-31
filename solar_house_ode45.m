@@ -14,28 +14,32 @@ V = w^3; %volume of house(m^3)
 I = 170.14; %incident solar radiation (w/m^2)
 
 e = .885; %efficiency of floor (emmisivity of oak)
-h_a = .1; %heat transfer of air
-h_w = .8; %heat transfer of walls (brick)
-h_f = .45; %heat coefficient of floor
+h_a = 0.026; %thermal conductivity of air
+h_w = 0.720; %thermal conductivity of walls (brick)
+h_f = 0.170; %thermal conductivity of floor (wood)
 d = 1.293;%density of air (kg/m^3)
 
 d_0 = 0;
-d_end = 5; %in days
+d_end = 1; %in days
 t_span = [d_0,d_end];
 
-Tr_0 = 300; %house interior starting temperature (K)
-Tf_0 = 300; %floor starting temperature (K)
+Tr_0 = 293; %house interior starting temperature (K)
+Tf_0 = 293; %floor starting temperature (K)
 
-[T,D] = ode45(@rate_func,t_span,Tf_0,Tr_0);
+init = [Tr_0, Tf_0]; % initial values
+
+[T,D] = ode45(@rate_func,t_span, init);
 
     function res = rate_func (~,D) 
+        Tr = D(1)/(V*d*h_a); %converting energy to change in temperature
+        Tf = D(2)/(V*d*h_f); %converting energy to change in temperature
         
         dUfdt = e*I*PA - h_f*A*(Tf - Tr); %change in energy in the floor
         dUrdt = h_f*A*(Tf - Tr) - ((h_w*SA)/wt)*(Tr - Ta);%change in energy in the room
-        T = dUrdt/(V*d*h_a); %converting energy to change in temperature
-        res = -T; 
+        
+        res = [dUfdt; dUrdt];
     end
-D
-T
+D;
+T;
 
 end
