@@ -17,6 +17,8 @@ e = .885; %efficiency of floor (emmisivity of oak)
 h_a = 0.026; %thermal conductivity of air
 h_w = 0.720; %thermal conductivity of walls (brick)
 h_f = 0.170; %thermal conductivity of floor (wood)
+s_f = 1700; %specific heat of floor(j/kg C)
+s_a = 1; %specific heat of air (j/kg C)
 d = 1.293;%density of air (kg/m^3)
 m_a = V*d; %mass of air k(g)
 m_f = 100; %mass of floor (kg)
@@ -30,20 +32,31 @@ Tf_0 = 293; %floor starting temperature (K)
 
 init = [Tr_0, Tf_0]; % initial values
 
+Uf = temperatureToEnergy(Tf_0, m_f, s_f)
+Ur = temperatureToEnergy(Tr_0, m_a, s_a)
+
 [T,D] = ode45(@rate_func,t_span, init);
+        
 
     function res = rate_func (~,D) 
+        
 %         Tr = D(1)/(V*d*h_a); %converting energy to change in temperature
-%         Tf = D(2)/(V*d*h_f); %converting energy to change in temperature
-        Uf = 
-        dUfdt = e*I*PA - h_f*A*(Tf - Tr); %change in energy in the floor
-        dUrdt = h_f*A*(Tf - Tr) - ((h_w*SA)/wt)*(Tr - Ta);%change in energy in the room
+%         Tf = D(2)/(V*d*h_f); %converting energy to change in temperature 
+        
+        Tr = energyToTemperature(D(2), m_a, s_a);
+        Tf = energyToTemperature(D(1), m_f, s_f)
+
+        dUfdt = 0;
+        dUrdt = 0;
+       
+%         dUfdt = e*I*PA - h_f*A*(Tf - Tr); %change in energy in the floor
+%         dUrdt = h_f*A*(Tf - Tr) - ((h_w*SA)/wt)*(Tr - Ta);%change in energy in the room
         %Tr = energyToTemperature(dUrdt, m, h_a);
         %Tf = energyToTemperature(dUfdt, m, h_a);
         
         res = [dUfdt; dUrdt];
     end
- Tr = energyToTemperature(D(:,2), m_a, h_a)
- Tf = energyToTemperature(D(:,1), m_f, h_f)
-  D = [Tr,Tf];
+ Tr = energyToTemperature(D(:,1), m_a, s_a)
+ Tf = energyToTemperature(D(:,2), m_f, s_f)
+  D = [Tf,Tr];
 end
