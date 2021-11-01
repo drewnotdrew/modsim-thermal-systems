@@ -45,7 +45,7 @@ init = [Tf_0, Tr_0]; % initial values
         Tr = D(2);
         %Uf = temperatureToEnergy(D(1), m_f, s_f);
         %Ur = temperatureToEnergy(D(2), m_a, s_a);
-        %Test = e*I*PA;
+        %Test = e*I*PA; Delete
         %dUfdt = 0;
         %dUrdt = 0;
        
