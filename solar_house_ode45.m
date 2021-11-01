@@ -35,7 +35,7 @@ init = [Tr_0, Tf_0]; % initial values
     function res = rate_func (~,D) 
 %         Tr = D(1)/(V*d*h_a); %converting energy to change in temperature
 %         Tf = D(2)/(V*d*h_f); %converting energy to change in temperature
-        
+        Uf = 
         dUfdt = e*I*PA - h_f*A*(Tf - Tr); %change in energy in the floor
         dUrdt = h_f*A*(Tf - Tr) - ((h_w*SA)/wt)*(Tr - Ta);%change in energy in the room
         %Tr = energyToTemperature(dUrdt, m, h_a);
@@ -43,7 +43,7 @@ init = [Tr_0, Tf_0]; % initial values
         
         res = [dUfdt; dUrdt];
     end
- Tr = energyToTemperature(D(:,2), m_a, h_a);
- Tf = energyToTemperature(D(:,1), m_f, h_f);
- D = [Tr,Tf];
+ Tr = energyToTemperature(D(:,2), m_a, h_a)
+ Tf = energyToTemperature(D(:,1), m_f, h_f)
+  D = [Tr,Tf];
 end
