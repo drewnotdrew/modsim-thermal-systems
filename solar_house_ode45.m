@@ -15,19 +15,19 @@ V = w^3; %volume of house(m^3)
 V_f = wf*w*w; %volume of floor
 I = 170.14; %incident solar radiation (w/m^2)
 
-e = .885; %efficiency of floor (emmisivity of oak)
+e = 0.885; %efficiency of floor (emmisivity of oak)
 h_a = 0.026; %thermal conductivity of air
 h_w = 0.05; %thermal conductivity of walls (insulation)
 h_f = 0.170; %thermal conductivity of floor (wood)
-s_f = 1.1134; %specific heat of floor(j/kg C)
-s_a = 1; %specific heat of air (j/kg C)
+s_f = 1850; %specific heat of floor(j/kg C)
+s_a = 1005; %specific heat of air (j/kg C)
 d = 1.293;%density of air (kg/m^3)
 d_f = 745; %density of floor (kg/m^3)
 m_a = V*d; %mass of air k(g)
 m_f = d_f*V_f; %mass of floor (kg)
 
 d_0 = 0;
-d_end = 200; %in seconds
+d_end = 60*60*24*40; %in seconds
 t_span = [d_0,d_end];
 
 Tf_0 = 293; %floor starting temperature (K)
