@@ -5,7 +5,9 @@ function [Tt,Dt] =  solar_house_day_night(wt);
     Dt = [];
     d_0 = 0;
     d_end = 0;
-    D = [293, 293];
+    Tf_0 = 293; % in K
+    Tr_0 = 293; % in K
+    D = [Tf_0, Tr_0]; 
     X = [];
     
     % Normal distribution setup
