@@ -12,7 +12,7 @@ SA = w^2*5; % surface area of house (m^2)
 V = w^3; % volume of house(m^3)
 V_f = wf*w*w; % volume of floor
 
-e = 0.5; % efficiency of floor (emmisivity of oak)
+e = 0.5; % efficiency of floor (emmisivity of drifted oak)
 h_a = 0.026; % thermal conductivity of air
 h_w = 0.05; % thermal conductivity of walls (insulation)
 h = 15; % Convection heat coefficient of air
