@@ -33,12 +33,12 @@ Tr_0 = D(Ds, 2);
 init = [Uf, Ur]; % initial values
 [T,D] = ode45(@rate_func,t_span, init);
     function res = rate_func (~,D);
-                  Tf = D(2)/(V_f*d_f*s_f); %converting energy to change in temperature 
-                  Tr = D(1)/(V*d*s_a); %converting energy to change in temperature
+        Tf = D(1)/(V_f*d_f*s_f); %converting energy to change in temperature 
+        Tr = D(2)/(V*d*s_a); %converting energy to change in temperature
         
         Tf = energyToTemperature(D(1), m_f, s_f);
         Tr = energyToTemperature(D(2), m_a, s_a);
-
+        testing = I;
         dUfdt = e*I*PA - h*A*(Tf - Tr); %change in energy in the floor
         dUrdt = h*A*(Tf - Tr) - ((h_w*SA)/wt)*(Tr - Ta);%change in energy in the room
         
