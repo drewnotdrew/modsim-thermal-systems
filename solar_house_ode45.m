@@ -23,29 +23,40 @@ d_f = 745; % density of floor (kg/m^3)
 m_a = V*d; % mass of air k(g)
 m_f = d_f*V_f; % mass of floor (kg)
 
+
+
 Ds = size(D, 1);
 
 Tf_0 = D(Ds, 1);
 Tr_0 = D(Ds, 2);
 
- Uf = temperatureToEnergy(Tf_0, m_f, s_f);
- Ur = temperatureToEnergy(Tr_0, m_a, s_a);
-init = [Uf, Ur]; % initial values
+ Uf = temperatureToEnergy(Tf_0, m_f, s_f); % Converting temperature to energy
+ Ur = temperatureToEnergy(Tr_0, m_a, s_a);% Converting temperature to energy
+
+ init = [Uf, Ur]; % initial values
+
 [T,D] = ode45(@rate_func,t_span, init);
     function res = rate_func (~,D);
-        Tf = D(1)/(V_f*d_f*s_f); %converting energy to change in temperature 
-        Tr = D(2)/(V*d*s_a); %converting energy to change in temperature
+        Tf = D(1)/(V_f*d_f*s_f); % change in energy to change in temperature 
+        Tr = D(2)/(V*d*s_a); % change in energy to change in temperature
         
         Tf = energyToTemperature(D(1), m_f, s_f);
         Tr = energyToTemperature(D(2), m_a, s_a);
-        testing = I;
-        dUfdt = e*I*PA - h*A*(Tf - Tr); %change in energy in the floor
-        dUrdt = h*A*(Tf - Tr) - ((h_w*SA)/wt)*(Tr - Ta);%change in energy in the room
+        
+        % For model verification
+        energyIntoFloor = e*I*PA
+        energyOutofFloor = h*A*(Tf - Tr)
+        
+        energyIntoRoom = h*A*(Tf - Tr)
+        EnergyOutofRoom = ((h_w*SA)/wt)*(Tr - Ta)
+        
+        dUfdt = e*I*PA - h*A*(Tf - Tr); %Energy into the floor (radiation) minus energy out of the floor (conduction)
+        dUrdt = h*A*(Tf - Tr) - ((h_w*SA)/wt)*(Tr - Ta);%Energy into the rom (conduction) minus energy out of the room (convection)
         
         res = [dUfdt; dUrdt];
     end
 
-D(:,1) = energyToTemperature(D(:,1), m_f, s_f);
-D(:,2) = energyToTemperature(D(:,2), m_a, s_a);
+D(:,1) = energyToTemperature(D(:,1), m_f, s_f); %Converting energy to temperature
+D(:,2) = energyToTemperature(D(:,2), m_a, s_a); %Converting energy to temperature
 
 end
